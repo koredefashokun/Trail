@@ -1,19 +1,26 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-import { View, TouchableWithoutFeedback, TouchableOpacity, Keyboard, KeyboardAvoidingView, Dimensions } from 'react-native';
+import {
+	View,
+	TouchableWithoutFeedback,
+	TouchableOpacity,
+	Keyboard,
+	KeyboardAvoidingView,
+	Dimensions
+} from 'react-native';
 
 import { FormInput, Button, BoldText } from '../../../components';
 import styles from '../styles';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 class Login extends Component {
 	state = {
 		username: '',
 		password: '',
 		isUsernameValid: true,
-		isPasswordValid: true,
-	}
+		isPasswordValid: true
+	};
 
 	logIn() {
 		const { username, password } = this.state;
@@ -22,7 +29,7 @@ class Login extends Component {
 
 	validateUsername() {
 		const { username } = this.state;
-		const regex = /^$/;
+		const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		const solution = regex.test(username);
 		this.setState({ isUsernameValid: solution });
 	}
@@ -38,14 +45,14 @@ class Login extends Component {
 		const { isUsernameValid, isPasswordValid, username, password } = this.state;
 		const isFormValid = isUsernameValid && isPasswordValid && username && password;
 		return (
-			<View style={styles.container}>
+			<KeyboardAvoidingView style={styles.container} behavior="padding">
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-					<Fragment>
-						<KeyboardAvoidingView behavior='padding' style={[styles.formContainer, { height: height / 2.5 }]}>
+					<View style={[styles.container, { width }]}>
+						<View style={[styles.formContainer, { height: height / 2.5 }]}>
 							<BoldText style={styles.headerText}>Log In</BoldText>
 							<FormInput
-								type='primary'
-								placeholder='Your username'
+								type="primary"
+								placeholder="Your username"
 								onChangeText={username => {
 									this.setState({ username });
 									this.validateUsername();
@@ -54,8 +61,8 @@ class Login extends Component {
 								hasError={isUsernameValid ? false : true}
 							/>
 							<FormInput
-								type='primary'
-								placeholder='Your password'
+								type="primary"
+								placeholder="Your password"
 								onChangeText={password => {
 									this.setState({ password });
 									this.validatePassword();
@@ -64,17 +71,18 @@ class Login extends Component {
 								hasError={isPasswordValid ? false : true}
 							/>
 							<Button
-								type='primary'
-								title='Log In'
+								type="primary"
+								title="Log In"
 								onPress={() => alert('Logging in...')}
+								disabled={isFormValid ? false : true}
 							/>
 							<TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
-								<BoldText style={{ fontSize: 18, textAlign: 'center' }}>Don't have an account?</BoldText>
+								<BoldText style={{ fontSize: 18, textAlign: 'center' }}>{`Don't have an account?`}</BoldText>
 							</TouchableOpacity>
-						</KeyboardAvoidingView>
-					</Fragment>
+						</View>
+					</View>
 				</TouchableWithoutFeedback>
-			</View>
+			</KeyboardAvoidingView>
 		);
 	}
 }

@@ -3,7 +3,7 @@ const Palette = {
 	white: '#FFFFFF',
 	darkGrey: '#505050',
 	lightGrey: '#D3D3D3',
-	red: '#DB4B6B'
+	red: '#F2AEAB'
 };
 
 export default Palette;

@@ -1,23 +1,31 @@
 import React, { Component, Fragment } from 'react';
 // import { connect } from 'react-redux';
-import { View, TouchableWithoutFeedback, TouchableOpacity, Keyboard, KeyboardAvoidingView, Dimensions, StatusBar } from 'react-native';
+import {
+	View,
+	TouchableWithoutFeedback,
+	TouchableOpacity,
+	Keyboard,
+	KeyboardAvoidingView,
+	Dimensions,
+	StatusBar
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { FormInput, Button, BoldText } from '../../../components';
 import styles from '../styles';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 class Password extends Component {
 	state = {
 		password: '',
 		confirmPassword: '',
 		isPasswordValid: true,
-		isConfirmPasswordValid: true,
-	}
+		isConfirmPasswordValid: true
+	};
 
 	toNext() {
-		this.props.navigation.navigate(); // The screen name
+		this.props.navigation.navigate();
 	}
 
 	validatePassword() {
@@ -38,19 +46,21 @@ class Password extends Component {
 		const { password, confirmPassword, isPasswordValid, isConfirmPasswordValid } = this.state;
 		const isFormValid = isPasswordValid && isConfirmPasswordValid && password && confirmPassword;
 		return (
-			<Fragment>
-				<StatusBar barStyle='light-content' />
-				<View style={[styles.container, { backgroundColor: '#000000' }]}>
-					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<KeyboardAvoidingView style={styles.container} behavior="padding">
+				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+					<View style={[styles.container, { width, backgroundColor: '#000000' }]}>
 						<Fragment>
+							<StatusBar barStyle="light-content" />
 							<TouchableOpacity style={styles.goBack} onPress={() => this.props.navigation.goBack()}>
-								<Icon name='arrow-left' size={30} color='#FFFFFF' />
+								<Icon name="arrow-left" size={30} color="#FFFFFF" />
 							</TouchableOpacity>
-							<KeyboardAvoidingView behavior='padding' style={[styles.formContainer, { height: height / 3 }]}>
-								<BoldText style={styles.headerText} type='secondary'>Create a password</BoldText>
+							<View style={[styles.formContainer, { height: height / 3 }]}>
+								<BoldText style={styles.headerText} type="secondary">
+									Create a password
+								</BoldText>
 								<FormInput
-									type='secondary'
-									placeholder='Pick a password'
+									type="secondary"
+									placeholder="Pick a password"
 									onChangeText={password => {
 										this.setState({ password });
 										this.validatePassword();
@@ -59,8 +69,8 @@ class Password extends Component {
 									hasError={isPasswordValid ? false : true}
 								/>
 								<FormInput
-									type='secondary'
-									placeholder='Your password'
+									type="secondary"
+									placeholder="Confirm your password"
 									onChangeText={confirmPassword => {
 										this.setState({ confirmPassword });
 										this.validateConfirmPassword();
@@ -69,16 +79,16 @@ class Password extends Component {
 									hasError={isConfirmPasswordValid ? false : true}
 								/>
 								<Button
-									type='secondary'
-									title='Create Account'
+									type="secondary"
+									title="Create Account"
 									onPress={() => this.logIn()}
 									disabled={isFormValid ? false : true}
 								/>
-							</KeyboardAvoidingView>
+							</View>
 						</Fragment>
-					</TouchableWithoutFeedback>
-				</View>
-			</Fragment>
+					</View>
+				</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
 		);
 	}
 }

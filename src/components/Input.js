@@ -27,9 +27,13 @@ export const FormInput = ({ placeholder, type, onChangeText, onBlur, hasError } 
 			height: 40,
 			borderRadius: 5,
 			padding: 10,
-			fontSize: 16
+			fontSize: 16,
+			fontFamily: 'Karla-Regular'
 		}}
+		autoCorrect={false}
+		autoCapitalize="none"
 		placeholderTextColor={types[type].placeholderColor}
+		underlineColorAndroid="transparent"
 	/>
 );
 
@@ -42,11 +46,32 @@ export const SearchInput = ({ placeholder, onChangeText } = {}) => (
 			width: '100%',
 			height: 40,
 			borderRadius: 5,
-			padding: 10
+			padding: 10,
+			fontSize: 16,
+			fontFamily: 'Karla-Regular'
 		}}
-		autoCapitalize='none'
+		autoCapitalize="none"
 		autoCorrect={false}
-		returnKeyType='search'
+		returnKeyType="search"
 		placeholderTextColor={darkGrey}
+		underlineColorAndroid="transparent"
+	/>
+);
+
+export const TextArea = ({ style, placeholder, onChangeText }) => (
+	<TextInput
+		{...{ placeholder, onChangeText }}
+		style={{
+			...style,
+			color: '#000000',
+			fontSize: 16,
+			fontFamily: 'Karla-Regular',
+			width: '100%',
+			height: '100%'
+		}}
+		placeholderTextColor="#505050"
+		autoCapitalize="none"
+		underlineColorAndroid="transparent"
+		multiline
 	/>
 );

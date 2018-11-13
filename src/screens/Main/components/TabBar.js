@@ -1,8 +1,6 @@
 import * as React from 'react';
-import Icon from '.'
+import { View } from 'react-native';
 
-export const TabBar = ({ } = {}) => (
-	<React.Fragment>
+const TabBar = ({}) => <View />;
 
-	</React.Fragment>
-);
+export default TabBar;
